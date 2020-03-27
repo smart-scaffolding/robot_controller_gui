@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.2/css/all.min.css'>
+    <link rel="stylesheet" href="./style.css">
+
+</head>
+
+<body>
+
+    <header id="titlebar">
+        <div id="drag-region">
+
+            <div id="window-title">
+            </div>
+
+            <div id="window-controls">
+
+                <div class="button" id="min-button">
+                    <img class="icon"
+                        srcset="icons/min-w-10.png 1x, icons/min-w-12.png 1.25x, icons/min-w-15.png 1.5x, icons/min-w-15.png 1.75x, icons/min-w-20.png 2x, icons/min-w-20.png 2.25x, icons/min-w-24.png 2.5x, icons/min-w-30.png 3x, icons/min-w-30.png 3.5x"
+                        draggable="false" />
+                </div>
+                <div class="button" id="max-button">
+                    <img class="icon"
+                        srcset="icons/max-w-10.png 1x, icons/max-w-12.png 1.25x, icons/max-w-15.png 1.5x, icons/max-w-15.png 1.75x, icons/max-w-20.png 2x, icons/max-w-20.png 2.25x, icons/max-w-24.png 2.5x, icons/max-w-30.png 3x, icons/max-w-30.png 3.5x"
+                        draggable="false" />
+                </div>
+                <div class="button" id="restore-button">
+                    <img class="icon"
+                        srcset="icons/restore-w-10.png 1x, icons/restore-w-12.png 1.25x, icons/restore-w-15.png 1.5x, icons/restore-w-15.png 1.75x, icons/restore-w-20.png 2x, icons/restore-w-20.png 2.25x, icons/restore-w-24.png 2.5x, icons/restore-w-30.png 3x, icons/restore-w-30.png 3.5x"
+                        draggable="false" />
+                </div>
+                <div class="button" id="close-button">
+                    <img class="icon"
+                        srcset="icons/close-w-10.png 1x, icons/close-w-12.png 1.25x, icons/close-w-15.png 1.5x, icons/close-w-15.png 1.75x, icons/close-w-20.png 2x, icons/close-w-20.png 2.25x, icons/close-w-24.png 2.5x, icons/close-w-30.png 3x, icons/close-w-30.png 3.5x"
+                        draggable="false" />
+                </div>
+
+            </div>
+        </div>
+    </header>
+    <div id="main">
+        <h2>Swarm Construction Microcontroller Monitor</h2>
+        <div class="serial-output">
+            <h3>Serial Output: </h3>
+            <div class="serial-text">
+                0001.00 -123.45 0213.20 0012
+            </div>
+
+            <button class="close-port" onclick="close_port()">
+                Close Port
+            </button>
+        </div>
+
+        <form onsubmit="return upload_to_robot(event)">
+
+            <div class="container" id="container">
+                <div class="form-container sign-up-container">
+                    <div class="form">
+
+                        <h1>
+                            Robot Data
+                        </h1>
+
+
+                    </div>
+
+                </div>
+                <div class="form-container sign-in-container">
+                    <div class="form">
+                        <h1>Send Data</h1>
+                        <div class="input-form">
+                            <label class="tooltip">Port:
+                                <div class="tooltiptext">Enter in the port the board is plugged into (see Arduino IDE
+                                    for
+                                    details)
+                                </div>
+                            </label>
+                            <input id="port" type="text" list="ports" required />
+                            <datalist id="ports">
+                                <option value="stairs">Stairs</option>
+                                <option value="inching">Inching</option>
+                                <option value="block">Block</option>
+                                <option value="point">Point</option>
+                            </datalist>
+                        </div>
+
+                        <div class="input-form">
+                            <label class="tooltip">Buad:
+                                <div class="tooltiptext">Change the baud rate</div>
+                            </label>
+                            <input id="baud" name="Baud" type="number" value="115200" required />
+                        </div>
+
+                        <div class="input-form">
+                            <label class="tooltip">Joint 1:
+                                <div class="tooltiptext">Set the angle for joint 1 (degrees)</div>
+                            </label>
+                            <input id="joint_1" type="number" step="0.01" value="40" onchange="serial_input_change()"
+                                required />
+
+                        </div>
+
+                        <div class="input-form">
+                            <label class="tooltip">Joint 2:
+                                <div class="tooltiptext">Set the angle for joint 2 (degrees)</div>
+                            </label>
+                            <input id="joint_2" type="number" step="0.01" value="100" onchange="serial_input_change()"
+                                required />
+                        </div>
+
+                        <div class="input-form">
+                            <label class="tooltip">Joint 3:
+                                <div class="tooltiptext">Set the angle for joint 3 (degrees)</div>
+                            </label>
+                            <input id="joint_3" type="number" step="0.01" value="30" onchange="serial_input_change()"
+                                required />
+                        </div>
+
+
+                        <fieldset>
+                            <legend>Grippers</legend>
+                            <div id="grippers" class="fieldset_div">
+
+                                <div class="input-form">
+                                    <label class="tooltip radio_label">Do Nothing:
+                                        <div class="tooltiptext">Neither gripper changes</div>
+                                    </label>
+                                    <input id="grippers_nothing" name="grippers" type="radio" checked="checked"
+                                        onchange="serial_input_change()" />
+                                </div>
+
+                                <div class="input-form">
+                                    <label class="tooltip radio_label">Open A:
+                                        <div class="tooltiptext">Gripper A unscrews</div>
+                                    </label>
+                                    <input id="grippers_open_a" name="grippers" type="radio"
+                                        onchange="serial_input_change()" />
+                                </div>
+
+                                <div class="input-form">
+                                    <label class="tooltip radio_label">Open D:
+                                        <div class="tooltiptext">Gripper D unscrews</div>
+                                    </label>
+                                    <input id="grippers_open_d" name="grippers" type="radio"
+                                        onchange="serial_input_change()" />
+                                </div>
+
+                                <div class="input-form">
+                                    <label class="tooltip radio_label">Close A:
+                                        <div class="tooltiptext">Gripper A screws in</div>
+                                    </label>
+                                    <input id="grippers_close_a" name="grippers" type="radio"
+                                        onchange="serial_input_change()" />
+                                </div>
+
+                                <div class="input-form">
+                                    <label class="tooltip radio_label">Close D:
+                                        <div class="tooltiptext">Gripper D screws in</div>
+                                    </label>
+                                    <input id="grippers_close_d" name="grippers" type="radio"
+                                        onchange="serial_input_change()" />
+                                </div>
+
+                                <div class="input-form">
+                                    <label class="tooltip radio_label">Close Both:
+                                        <div class="tooltiptext">Both grippers screw in</div>
+                                    </label>
+                                    <input id="grippers_close_both" name="grippers" type="radio"
+                                        onchange="serial_input_change()" />
+                                </div>
+
+                                <div class="input-form">
+
+                                    <label class="tooltip radio_label">Open Both:
+                                        <div class="tooltiptext">Both grippers unscrew</div>
+                                    </label>
+                                    <input id="grippers_open_both" name="grippers" type="radio"
+                                        onchange="serial_input_change()" />
+
+                                </div>
+
+                            </div>
+
+                        </fieldset>
+
+                        <fieldset>
+                            <legend>Allen Key</legend>
+                            <div id="allen-keys" class="fieldset_div">
+
+                                <div class="input-form">
+                                    <label class="tooltip radio_label">Do Nothing:
+                                        <div class="tooltiptext">Allen keys do nothing</div>
+                                    </label>
+                                    <input id="allen_nothing" name="allen" type="radio" checked="checked" />
+                                </div>
+
+                                <div class="input-form">
+                                    <label class="tooltip radio_label">Open A:
+                                        <div class="tooltiptext">Allen Key A unscrews</div>
+                                    </label>
+                                    <input id="allen_open_a" name="allen" type="radio"
+                                        onchange="serial_input_change()" />
+                                </div>
+
+                                <div class="input-form">
+                                    <label class="tooltip radio_label">Open D:
+                                        <div class="tooltiptext">Allen Key D unscrews</div>
+                                    </label>
+                                    <input id="allen_open_d" name="allen" type="radio"
+                                        onchange="serial_input_change()" />
+                                </div>
+
+                                <div class="input-form">
+                                    <label class="tooltip radio_label">Close A:
+                                        <div class="tooltiptext">Allen Key A screws in </div>
+                                    </label>
+                                    <input id="allen_close_a" name="allen" type="radio"
+                                        onchange="serial_input_change()" />
+                                </div>
+
+                                <div class="input-form">
+                                    <label class="tooltip radio_label">Close D:
+                                        <div class="tooltiptext">Allen Key D screws in </div>
+                                    </label>
+                                    <input id="allen_close_d" name="allen" type="radio"
+                                        onchange="serial_input_change()" />
+                                </div>
+
+                                <div class="input-form">
+                                    <label class="tooltip radio_label">Close Both:
+                                        <div class="tooltiptext">Both allen keys screw in </div>
+                                    </label>
+                                    <input id="allen_close_both" name="allen" type="radio"
+                                        onchange="serial_input_change()" />
+                                </div>
+
+                                <div class="input-form">
+                                    <label class="tooltip radio_label">Open Both:
+                                        <div class="tooltiptext">Both allen keys unscrew</div>
+                                    </label>
+                                    <input id="allen_open_both" name="allen" type="radio"
+                                        onchange="serial_input_change()" />
+                                </div>
+                            </div>
+                        </fieldset>
+                        <div class="home-submit">
+                            <div>
+                                <label class="tooltip monitor_label">
+                                    <div class="tooltiptext">Set robot angles to home position </div>
+                                </label>
+                                <button class="button_monitor" id="home" type="button"
+                                    onclick="home_robot()">Home</button>
+                            </div>
+                            <div>
+                                <label class="tooltip monitor_label">
+                                    <div class="tooltiptext">Open port with robot </div>
+                                </label>
+                                <button class="button_monitor" type="submit">Open</button>
+                            </div>
+                            <div>
+                                <label class="tooltip monitor_label">
+                                    <div class="tooltiptext">Send angles over serial</div>
+                                </label>
+                                <button class="button_monitor" type="button" onclick="write_to_port()">Send</button>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="overlay-container">
+                    <div class="overlay">
+                        <div class="overlay-panel overlay-left">
+                            <h1>Run another trial</h1>
+                            <p>Reset to run another trial</p>
+                            <button class="ghost" id="signIn">Reupload</button>
+                        </div>
+                        <div class="overlay-panel overlay-right">
+                            <div>
+                                <h1 class="robot-data">Data from robot</h1>
+                                <button class="clear_button" onclick="clear_table(event)">Clear</button>
+                                <button class="clear_button" onclick="save_output(event)">Save</button>
+                            </div>
+
+                            <div class="tableformat">
+                                <table>
+
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script src="./renderer.js"></script>
+
+    <script>
+        var port;
+        var serialport = require('serialport');
+        serial_input_change();
+
+        function serial_input_change() {
+
+            var joint_1 = parseFloat(document.getElementById("joint_1").value).toFixed(2);
+            var joint_2 = parseFloat(document.getElementById("joint_2").value).toFixed(2);
+            var joint_3 = parseFloat(document.getElementById("joint_3").value).toFixed(2);
+            var gripper_radios = document.getElementsByName('grippers');
+
+            var gripper = "00";
+            for (var i = 0, length = gripper_radios.length; i < length; i++) {
+                if (gripper_radios[i].checked) {
+                    if (i == 0) {
+                        gripper = "00";
+                    }
+
+                    if (i == 1) {
+                        gripper = "12";
+                    }
+
+                    if (i == 2) {
+                        gripper = "22";
+                    }
+
+                    if (i == 3) {
+                        gripper = "11";
+                    }
+
+                    if (i == 4) {
+                        gripper = "21";
+                    }
+
+                    if (i == 5) {
+                        gripper = "32";
+                    }
+
+                    if (i == 6) {
+                        gripper = "31";
+                    }
+
+                    break;
+                }
+            }
+
+            var allen_radios = document.getElementsByName('allen');
+
+            var allen = "00";
+            for (var i = 0, length = allen_radios.length; i < length; i++) {
+                if (allen_radios[i].checked) {
+                    if (i == 0) {
+                        allen = "00";
+                    }
+
+                    if (i == 1) {
+                        allen = "12";
+                    }
+
+                    if (i == 2) {
+                        allen = "22";
+                    }
+
+                    if (i == 3) {
+                        allen = "11";
+                    }
+
+                    if (i == 4) {
+                        allen = "21";
+                    }
+
+                    if (i == 5) {
+                        allen = "32";
+                    }
+
+                    if (i == 6) {
+                        allen = "31";
+                    }
+                    break;
+                }
+            }
+
+            let output = {
+                "joint_1": joint_1,
+                "joint_2": joint_2,
+                "joint_3": joint_3,
+                "allen_key": allen,
+                "grippers": gripper
+
+            }
+
+
+            let serial_output = formatJointOutput(joint_1) + " " + formatJointOutput(joint_2) + " " + formatJointOutput(
+                    joint_3) + " " +
+                allen + gripper + "\n";
+            console.log(serial_output)
+
+            document.getElementsByClassName("serial-text")[0].innerText = serial_output;
+
+            return serial_output;
+
+        }
+
+        function upload_to_robot(event) {
+
+            event.preventDefault();
+            let serial_output = serial_input_change();
+
+
+            const Readline = serialport.parsers.Readline;
+
+            port = new serialport(document.getElementById('port').value, {
+                baudRate: parseInt(document.getElementById('baud').value),
+            });
+
+            console.log("Sending instructions to robot")
+
+            read_data_from_robot(port, Readline);
+            return false;
+
+        }
+
+        function write_to_port() {
+            let serial_output = serial_input_change();
+            console.log("Writing to port")
+            console.log(serial_output)
+            port.write(serial_output)
+            new Notification('Success', {
+                body: 'Sent message successfully'
+            })
+        }
+
+        function clear_table(event) {
+            event.preventDefault();
+            var table = document.querySelector("table");
+            table.innerHTML = "";
+        }
+
+        function home_robot() {
+            document.getElementById("joint_1").value = 28.00;
+            document.getElementById("joint_2").value = 124.00;
+            document.getElementById("joint_3").value = 28.00;
+
+            serial_input_change();
+        }
+
+        function formatJointOutput(jointData) {
+            let parts = String(jointData).split(".");
+            let sign = "0";
+            if (parts[0].includes("-")) {
+                sign = "-";
+            }
+
+            let output = sign + ('000' + parts[0]).replace("-", "").slice(-3) + ".";
+            if (parts.length > 1) {
+                output += parts[1].slice(0, 2).padEnd(2, "0")
+            } else {
+                output += "00"
+            }
+            return output;
+        }
+
+        get_new_ports();
+
+        function get_new_ports() {
+            serialport.list((err, ports) => {
+                console.log("ports", ports);
+                var options;
+
+                for (var i = 0; i < ports.length; i++)
+                    options += '<option value="' + ports[i].comName + '" />';
+
+                document.getElementById("ports").innerHTML = options;
+            });
+        }
+
+        // Refresh serial port list every 5 seconds
+        setInterval(get_new_ports, 5000);
+
+        function read_data_from_robot(port, Readline) {
+            // Read the port data
+            const parser = port.pipe(new Readline({
+                delimiter: '\n'
+            }));
+            parser.on('data', read_data_helper);
+
+        }
+
+        function close_port() {
+            console.log("Closing port");
+            port.close();
+            console.log("Port has been closed");
+            new Notification('Closed port', {
+                body: 'Successfully closed port'
+            })
+        }
+
+        function read_data_helper(message) {
+
+
+            console.log(message);
+
+            function generateTable(table, data) {
+                for (let element of data) {
+                    let row = table.insertRow();
+                    for (key in element) {
+                        let cell = row.insertCell();
+                        let text = document.createTextNode(element[key]);
+                        cell.appendChild(text);
+                    }
+                }
+            }
+
+            function generateTableHead(table, data) {
+                let thead = table.createTHead();
+                let row = thead.insertRow();
+                for (let key of data) {
+                    let th = document.createElement("th");
+                    let text = document.createTextNode(key);
+                    row.appendChild(th);
+                }
+            }
+
+            let table = document.querySelector("table");
+            let data = ["Response"]
+
+            generateTableHead(table, data);
+            generateTable(table, [{
+                "Response": message
+            }]);
+
+        }
+
+        function save_output(event) {
+            var remote = require('electron').remote;
+            var fs = require("fs");
+
+            var currentWindow = remote.getCurrentWindow();
+            const {
+                dialog
+            } = require('electron').remote
+            var fileName = dialog.showSaveDialog(currentWindow);
+            var table = document.querySelector("table");
+            var save_text = table.innerText;
+
+            if (fileName !== undefined) {
+                console.log(fileName);
+                fs.appendFile(fileName, save_text, function (err) {
+                    if (err) throw err;
+                    console.log('Saved!');
+                });
+            }
+        }
+    </script>
+
+</body>
+
+</html>

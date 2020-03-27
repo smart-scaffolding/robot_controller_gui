@@ -1,0 +1,92 @@
+<html>
+
+<head>
+  <style>
+    body {
+      background: black;
+    }
+
+    #editor {
+      position: absolute;
+      width: 770px;
+      height: 570px;
+    }
+  </style>
+  <script src="lib/ace.js" type="text/javascript" charset="utf-8"></script>
+  <script src="lib/mode-javascript.js" type="text/javascript" charset="utf-8"></script>
+  <script src="lib/theme-twilight.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body>
+  <button onclick="openHandler()">Open File</button>
+  <button onclick="saveHandler()">Save File</button>
+  <br>
+  <br>
+  <div style="height: 100%; width:100%;" id="editor">/** Put your text here */</div>
+
+
+  <script>
+    var remote = require('electron').remote;
+    var fs = require("fs");
+
+    var currentWindow = remote.getCurrentWindow();
+    var JavaScriptMode = ace.require("ace/mode/javascript").Mode;
+    var editorInstance = ace.edit("editor");
+
+    const {
+      Menu,
+      MenuItem,
+      dialog
+    } = require('electron').remote
+    const menu = new Menu();
+    menu.append(new MenuItem({
+      label: 'File',
+      submenu: [{
+          label: "Open",
+          click: openHandler
+        },
+        {
+          label: "Save As",
+          click: saveHandler
+        }
+      ]
+    }));
+
+    Menu.setApplicationMenu(null);
+
+    currentWindow.setMenu(menu);
+
+
+    function openHandler() {
+      var fileNames = dialog.showOpenDialog(currentWindow);
+
+      if (fileNames !== undefined) {
+        var fileName = fileNames[0];
+        fs.readFile(fileName, "utf8", function (err, data) {
+          editorInstance.setValue(data);
+        });
+      }
+    }
+
+    function saveHandler() {
+      var fileName = dialog.showSaveDialog(currentWindow);
+
+      if (fileName !== undefined) {
+        console.log(fileName);
+        fs.appendFile(fileName, editorInstance.getValue(), function (err) {
+          if (err) throw err;
+          console.log('Saved!');
+        });
+      }
+    }
+
+    editorInstance.setTheme("ace/theme/twilight");
+    editorInstance.session.setMode(new JavaScriptMode());
+    editorInstance.setOptions({
+      enableBasicAutocompletion: true,
+      enableSnippets: true
+    });
+  </script>
+</body>
+
+</html>

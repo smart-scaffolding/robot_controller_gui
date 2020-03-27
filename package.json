@@ -1,0 +1,51 @@
+{
+  "name": "Robot_Controller_GUI",
+  "version": "1.0.0",
+  "description": "Swarm Construction GUI used to control the robot by running simple high level and low level control commands",
+  "author": {
+    "name": "Caleb Wagner"
+  },
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "package": "electron-packager . --all --icon 'gui/images/icon.icns' --overwrite --out='./build'",
+    "dist": "electron-builder",
+    "postinstall": "install-app-deps"
+  },
+  "build": {
+    "appId": "yourappid",
+    "files": [
+      "node_modules/",
+      "index.html",
+      "main.js",
+      "package.json",
+      "gui/**/*"
+    ],
+    "mac": {
+      "icon": "./gui/images/icon.icns",
+      "category": "public.app-category.utilities"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ]
+    },
+    "win": {
+      "target": "squirrel",
+      "icon": "./gui/images/icon.png"
+    }
+  },
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "electron": "^5.0.5",
+    "electron-builder": "^22.4.1",
+    "electron-rebuild": "^1.8.5"
+  },
+  "dependencies": {
+    "custom-electron-titlebar": "^3.2.2-hotfix62",
+    "electron-reload": "^1.5.0",
+    "python-shell": "^1.0.8",
+    "serialport": "^7.1.5"
+  }
+}
