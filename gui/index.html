@@ -1,36 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.2/css/all.min.css"
-    />
-    <link rel="stylesheet" href="./style.css" />
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="linkers/robot_control.js"></script>
-  </head>
-  <body>
-    <header id="titlebar">
-      <div id="drag-region">
-        <div id="window-title">
-          <ul>
-            <li>
-              <a class="active" href="index.html" onclick="return false;"
-                >Main</a
-              >
-            </li>
-            <li><a href="#" onclick="openMonitor()">Monitor</a></li>
-            <li><a href="#" onclick="openEditor()">Editor</a></li>
-          </ul>
-        </div>
 
-        <div id="window-controls">
-          <div class="button" id="min-button">
-            <img
-              class="icon"
-              srcset="
+<head>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.2/css/all.min.css" />
+  <link rel="stylesheet" href="./style.css" />
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="linkers/robot_control.js"></script>
+</head>
+
+<body>
+  <header id="titlebar">
+    <div id="drag-region">
+      <div id="window-title">
+        <ul>
+          <li>
+            <a class="active" href="index.html" onclick="return false;">Main</a>
+          </li>
+          <li><a href="#" onclick="openMonitor()">Monitor</a></li>
+          <li><a href="#" onclick="openEditor()">Editor</a></li>
+        </ul>
+      </div>
+
+      <div id="window-controls">
+        <div class="button" id="min-button">
+          <img class="icon" srcset="
                 icons/min-w-10.png 1x,
                 icons/min-w-12.png 1.25x,
                 icons/min-w-15.png 1.5x,
@@ -40,14 +35,10 @@
                 icons/min-w-24.png 2.5x,
                 icons/min-w-30.png 3x,
                 icons/min-w-30.png 3.5x
-              "
-              draggable="false"
-            />
-          </div>
-          <div class="button" id="max-button">
-            <img
-              class="icon"
-              srcset="
+              " draggable="false" />
+        </div>
+        <div class="button" id="max-button">
+          <img class="icon" srcset="
                 icons/max-w-10.png 1x,
                 icons/max-w-12.png 1.25x,
                 icons/max-w-15.png 1.5x,
@@ -57,14 +48,10 @@
                 icons/max-w-24.png 2.5x,
                 icons/max-w-30.png 3x,
                 icons/max-w-30.png 3.5x
-              "
-              draggable="false"
-            />
-          </div>
-          <div class="button" id="restore-button">
-            <img
-              class="icon"
-              srcset="
+              " draggable="false" />
+        </div>
+        <div class="button" id="restore-button">
+          <img class="icon" srcset="
                 icons/restore-w-10.png 1x,
                 icons/restore-w-12.png 1.25x,
                 icons/restore-w-15.png 1.5x,
@@ -74,14 +61,10 @@
                 icons/restore-w-24.png 2.5x,
                 icons/restore-w-30.png 3x,
                 icons/restore-w-30.png 3.5x
-              "
-              draggable="false"
-            />
-          </div>
-          <div class="button" id="close-button">
-            <img
-              class="icon"
-              srcset="
+              " draggable="false" />
+        </div>
+        <div class="button" id="close-button">
+          <img class="icon" srcset="
                 icons/close-w-10.png 1x,
                 icons/close-w-12.png 1.25x,
                 icons/close-w-15.png 1.5x,
@@ -91,170 +74,148 @@
                 icons/close-w-24.png 2.5x,
                 icons/close-w-30.png 3x,
                 icons/close-w-30.png 3.5x
-              "
-              draggable="false"
-            />
-          </div>
+              " draggable="false" />
         </div>
-      </div>
-    </header>
-    <div id="main">
-      <h2>Swarm Construction Robot Controller GUI</h2>
-
-      <div class="container" id="container">
-        <div class="form-container sign-up-container">
-          <div class="form">
-            <h1>
-              Robot Data
-            </h1>
-            <div class="tableformat">
-              <table></table>
-            </div>
-          </div>
-        </div>
-        <form onsubmit="return submitForm(event)">
-          <div class="form-container sign-in-container">
-            <div class="form">
-              <h1>Configure robot parameters</h1>
-              <input id="myfile" type="file" webkitdirectory required />
-              <div class="input-form">
-                <label class="tooltip"
-                  >Serial:
-                  <div class="tooltiptext">
-                    Toggle whether to upload to the robot or just run in
-                    simulation
-                  </div>
-                </label>
-                <input id="serial" type="checkbox" checked="checked" />
-              </div>
-
-              <div class="input-form">
-                <label class="tooltip"
-                  >Port:
-                  <div class="tooltiptext">
-                    Enter in the port the board is plugged into (see Arduino IDE
-                    for details)
-                  </div>
-                </label>
-                <input id="port" type="text" list="ports" required />
-                <datalist id="ports">
-                  <option value="stairs">Stairs</option>
-                  <option value="inching">Inching</option>
-                  <option value="block">Block</option>
-                  <option value="point">Point</option>
-                </datalist>
-              </div>
-
-              <div class="input-form">
-                <label class="tooltip"
-                  >Buad:
-                  <div class="tooltiptext">Change the baud rate</div>
-                </label>
-                <input
-                  id="baud"
-                  name="Baud"
-                  type="number"
-                  value="115200"
-                  required
-                />
-              </div>
-
-              <div class="input-form">
-                <label class="tooltip"
-                  >Delay:
-                  <div class="tooltiptext">
-                    Change the rate each via point is sent (in seconds)
-                  </div>
-                </label>
-                <input
-                  id="delay"
-                  type="number"
-                  step="0.01"
-                  value="0.02"
-                  required
-                />
-              </div>
-
-              <div class="input-form">
-                <label class="tooltip"
-                  >ViaPoints:
-                  <div class="tooltiptext">
-                    Change the number of via points sent for each motion
-                  </div>
-                </label>
-                <input id="via-points" type="number" value="50" required />
-              </div>
-
-              <div class="input-form">
-                <label class="tooltip"
-                  >Grippers:
-                  <div class="tooltiptext">
-                    Toggle whether to use the grippers or not
-                  </div>
-                </label>
-                <input id="grippers" type="checkbox" checked="checked" />
-              </div>
-
-              <select id="Path" onchange="changeVideo()">
-                <option value="single_step">Single Step</option>
-                <option value="single_step_block">Step Onto Block</option>
-                <option value="two_step">Two Step</option>
-                <option value="two_step_onto_block">Two Step Onto Block</option>
-                <option value="full_playground_inch"
-                  >Inching (Full Playground)</option
-                >
-                <option value="stairs">Stairs</option>
-              </select>
-              <a
-                href="https://smart-scaffolding.github.io/swarm_construction_dashboard/"
-                onclick="open_dashboard(event)"
-                >See data dashboard</a
-              >
-
-              <button type="submit">Configure options</button>
-            </div>
-          </div>
-          <div class="overlay-container">
-            <div class="overlay">
-              <div class="overlay-panel overlay-left">
-                <h1>Run another trial</h1>
-                <p>Reset to run another trial</p>
-                <button class="ghost" id="signIn">Reupload</button>
-              </div>
-              <div class="overlay-panel overlay-right">
-                <iframe
-                  width="300"
-                  height="300"
-                  src="https://www.youtube.com/embed/1j2xisqR4ZY?autoplay=1&controls=0&loop=1&playlist=1j2xisqR4ZY"
-                  allowfullscreen="allowfullscreen"
-                >
-                </iframe>
-                <br />
-                <h1>Upload to robot</h1>
-                <p>
-                  Finish setting the control parameters and then upload to the
-                  robot
-                </p>
-                <button
-                  class="ghost"
-                  id="signUp"
-                  type="submit"
-                  onclick="upload_to_robot(event)"
-                >
-                  Upload to robot
-                </button>
-              </div>
-            </div>
-          </div>
-        </form>
       </div>
     </div>
-    <script src="./renderer.js"></script>
-    <script src="./script.js"></script>
+  </header>
+  <div id="main">
+    <h2>Swarm Construction Robot Controller GUI</h2>
 
-    <script>
-      const serialport = require("serialport");
+    <div class="container" id="container">
+      <div class="form-container sign-up-container">
+        <div class="form">
+          <h1>
+            Robot Data
+          </h1>
+          <div class="tableformat">
+            <table></table>
+          </div>
+        </div>
+      </div>
+      <form onsubmit="return submitForm(event)">
+        <div class="form-container sign-in-container">
+          <div class="form">
+            <h1>Configure robot parameters</h1>
+            <input id="myfile" type="file" webkitdirectory required />
+            <div class="input-form">
+              <label class="tooltip">Serial:
+                <div class="tooltiptext">
+                  Toggle whether to upload to the robot or just run in
+                  simulation
+                </div>
+              </label>
+              <input id="serial" type="checkbox" checked="checked" />
+            </div>
 
+            <div class="input-form">
+              <label class="tooltip">Port:
+                <div class="tooltiptext">
+                  Enter in the port the board is plugged into (see Arduino IDE
+                  for details)
+                </div>
+              </label>
+              <input id="port" type="text" list="ports" required />
+              <datalist id="ports">
+                <option value="stairs">Stairs</option>
+                <option value="inching">Inching</option>
+                <option value="block">Block</option>
+                <option value="point">Point</option>
+              </datalist>
+            </div>
+
+            <div class="input-form">
+              <label class="tooltip">Buad:
+                <div class="tooltiptext">Change the baud rate</div>
+              </label>
+              <input id="baud" name="Baud" type="number" value="115200" required />
+            </div>
+
+            <div class="input-form">
+              <label class="tooltip">Delay:
+                <div class="tooltiptext">
+                  Change the rate each via point is sent (in seconds)
+                </div>
+              </label>
+              <input id="delay" type="number" step="0.01" value="0.02" required />
+            </div>
+
+            <div class="input-form">
+              <label class="tooltip">ViaPoints:
+                <div class="tooltiptext">
+                  Change the number of via points sent for each motion
+                </div>
+              </label>
+              <input id="via-points" type="number" value="50" required />
+            </div>
+
+            <div class="input-form">
+              <label class="tooltip">Grippers:
+                <div class="tooltiptext">
+                  Toggle whether to use the grippers or not
+                </div>
+              </label>
+              <input id="grippers" type="checkbox" checked="checked" />
+            </div>
+
+            <select id="Path" onchange="changeVideo()">
+              <option value="single_step">Single Step</option>
+              <option value="single_step_block">Step Onto Block</option>
+              <option value="two_step">Two Step</option>
+              <option value="two_step_onto_block">Two Step Onto Block</option>
+              <option value="full_playground_inch">Inching (Full Playground)</option>
+              <option value="stairs">Stairs</option>
+            </select>
+            <a href="https://smart-scaffolding.github.io/swarm_construction_dashboard/"
+              onclick="open_dashboard(event)">See data dashboard</a>
+
+            <button type="submit">Configure options</button>
+          </div>
+        </div>
+        <div class="overlay-container">
+          <div class="overlay">
+            <div class="overlay-panel overlay-left">
+              <h1>Run another trial</h1>
+              <p>Reset to run another trial</p>
+              <button class="ghost" id="signIn">Reupload</button>
+            </div>
+            <div class="overlay-panel overlay-right">
+              <iframe width="300" height="300"
+                src="https://www.youtube.com/embed/1j2xisqR4ZY?autoplay=1&controls=0&loop=1&playlist=1j2xisqR4ZY"
+                allowfullscreen="allowfullscreen">
+              </iframe>
+              <br />
+              <h1>Upload to robot</h1>
+              <p>
+                Finish setting the control parameters and then upload to the
+                robot
+              </p>
+              <button class="ghost" id="signUp" type="submit" onclick="upload_to_robot(event)">
+                Upload to robot
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <script src="./renderer.js"></script>
+  <script src="./script.js"></script>
+
+  <script>
+    const serialport = require("serialport");
+
+    serialport.list((err, ports) => {
+      console.log("ports", ports);
+      var options;
+
+      for (var i = 0; i < ports.length; i++)
+        options += '<option value="' + ports[i].comName + '" />';
+
+      document.getElementById("ports").innerHTML = options;
+    });
+
+    function get_new_ports() {
       serialport.list((err, ports) => {
         console.log("ports", ports);
         var options;
@@ -264,152 +225,143 @@
 
         document.getElementById("ports").innerHTML = options;
       });
+    }
 
-      function get_new_ports() {
-        serialport.list((err, ports) => {
-          console.log("ports", ports);
-          var options;
+    // Refresh serial port list every 5 seconds
+    setInterval(get_new_ports, 5000);
 
-          for (var i = 0; i < ports.length; i++)
-            options += '<option value="' + ports[i].comName + '" />';
+    var ready_to_upload = false;
 
-          document.getElementById("ports").innerHTML = options;
+    function upload_to_robot(event) {
+      submitForm(event);
+
+      if (ready_to_upload) {
+        file_path = document.getElementById("myfile").files[0].path;
+
+        if (control_robot(file_path, get_parameters())) {
+          console.log("Ready to upload");
+          container.classList.add("right-panel-active");
+        }
+      } else {
+        console.log("Not ready to upload");
+        new Notification("Error", {
+          body: "Please fill out the form completely before uploading"
         });
       }
+      ready_to_upload = false;
+    }
 
-      // Refresh serial port list every 5 seconds
-      setInterval(get_new_ports, 5000);
+    function open_dashboard(event) {
+      var shell = require("electron").shell;
 
-      var ready_to_upload = false;
+      event.preventDefault();
 
-      function upload_to_robot(event) {
-        submitForm(event);
+      //open link externally by default
+      shell.openExternal(
+        "https://smart-scaffolding.github.io/swarm_construction_dashboard/"
+      );
+    }
 
-        if (ready_to_upload) {
-          file_path = document.getElementById("myfile").files[0].path;
+    function openNewWindow(html_file, frame) {
+      const remote = require("electron").remote;
+      const BrowserWindow = remote.BrowserWindow;
+      const win = new BrowserWindow({
+        width: 800,
+        height: 800,
+        webPreferences: {
+          nodeIntegration: true
+        },
+        frame: frame
+      });
+      const url = require("url");
 
-          if (control_robot(file_path, get_parameters())) {
-            console.log("Ready to upload");
-            container.classList.add("right-panel-active");
-          }
-        } else {
-          console.log("Not ready to upload");
-          new Notification("Error", {
-            body: "Please fill out the form completely before uploading"
-          });
-        }
-        ready_to_upload = false;
+      win.loadURL(
+        url.format({
+          pathname: path.join(__dirname, html_file),
+          protocol: "file:",
+          slashes: true
+        })
+      );
+      return false;
+    }
+
+    function openMonitor() {
+      return openNewWindow("monitor.html", false);
+    }
+
+    function openEditor() {
+      return openNewWindow("editor.html", true);
+    }
+
+    function changeVideo() {
+      var index = document.getElementsByTagName("select")[0].selectedIndex;
+      var url = "";
+
+      if (index == 0) {
+        url =
+          "https://www.youtube.com/embed/1j2xisqR4ZY?autoplay=1&controls=0&loop=1&playlist=1j2xisqR4ZY";
+      } else if (index == 1) {
+        url =
+          "https://www.youtube.com/embed/iIPAnJyC4cU?autoplay=1&controls=0&loop=1&playlist=iIPAnJyC4cU";
+      } else if (index == 2) {
+        url =
+          "https://www.youtube.com/embed/7e4asvwcAq0?autoplay=1&controls=0&loop=1&playlist=7e4asvwcAq0";
+      } else if (index == 3) {
+        url =
+          "https://www.youtube.com/embed/U1e-hOnrDW4?autoplay=1&controls=0&loop=1&playlist=U1e-hOnrDW4";
+      } else if (index == 4) {
+        url =
+          "https://www.youtube.com/embed/8zOzqL0yFYk?autoplay=1&controls=0&loop=1&playlist=8zOzqL0yFYk";
+      } else if (index == 5) {
+        url =
+          "https://www.youtube.com/embed/gaRoGtD6eBs?autoplay=1&controls=0&loop=1&playlist=gaRoGtD6eBs";
+      } else {
+        url =
+          "https://www.youtube.com/embed/1j2xisqR4ZY?autoplay=1&controls=0&loop=1&playlist=1j2xisqR4ZY";
       }
 
-      function open_dashboard(event) {
-        var shell = require("electron").shell;
+      document.getElementsByTagName("iframe")[0].src = url;
+      console.log(url);
+      console.log(index);
+    }
 
-        event.preventDefault();
+    function submitForm(event) {
+      event.preventDefault();
+      console.log("Updated Parameters");
 
-        //open link externally by default
-        shell.openExternal(
-          "https://smart-scaffolding.github.io/swarm_construction_dashboard/"
-        );
-      }
+      let output = get_parameters();
 
-      function openNewWindow(html_file, frame) {
-        const remote = require("electron").remote;
-        const BrowserWindow = remote.BrowserWindow;
-        const win = new BrowserWindow({
-          width: 800,
-          height: 800,
-          webPreferences: {
-            nodeIntegration: true
-          },
-          frame: frame
-        });
-        const url = require("url");
+      console.log(output);
 
-        win.loadURL(
-          url.format({
-            pathname: path.join(__dirname, html_file),
-            protocol: "file:",
-            slashes: true
-          })
-        );
-        return false;
-      }
-      function openMonitor() {
-        return openNewWindow("monitor.html", false);
-      }
+      ready_to_upload = document
+        .getElementsByTagName("form")[0]
+        .checkValidity();
 
-      function openEditor() {
-        return openNewWindow("editor.html", true);
-      }
+      return false;
+    }
 
-      function changeVideo() {
-        var index = document.getElementsByTagName("select")[0].selectedIndex;
-        var url = "";
+    function get_parameters() {
+      var port = document.getElementById("port").value;
+      var serial = document.getElementById("serial").checked;
+      var delay = parseFloat(document.getElementById("delay").value);
+      var baud = parseInt(document.getElementById("baud").value);
+      var via_points = parseInt(document.getElementById("via-points").value);
+      var grippers = document.getElementById("grippers").checked;
 
-        if (index == 0) {
-          url =
-            "https://www.youtube.com/embed/1j2xisqR4ZY?autoplay=1&controls=0&loop=1&playlist=1j2xisqR4ZY";
-        } else if (index == 1) {
-          url =
-            "https://www.youtube.com/embed/iIPAnJyC4cU?autoplay=1&controls=0&loop=1&playlist=iIPAnJyC4cU";
-        } else if (index == 2) {
-          url =
-            "https://www.youtube.com/embed/7e4asvwcAq0?autoplay=1&controls=0&loop=1&playlist=7e4asvwcAq0";
-        } else if (index == 3) {
-          url =
-            "https://www.youtube.com/embed/U1e-hOnrDW4?autoplay=1&controls=0&loop=1&playlist=U1e-hOnrDW4";
-        } else if (index == 4) {
-          url =
-            "https://www.youtube.com/embed/8zOzqL0yFYk?autoplay=1&controls=0&loop=1&playlist=8zOzqL0yFYk";
-        } else if (index == 5) {
-          url =
-            "https://www.youtube.com/embed/gaRoGtD6eBs?autoplay=1&controls=0&loop=1&playlist=gaRoGtD6eBs";
-        } else {
-          url =
-            "https://www.youtube.com/embed/1j2xisqR4ZY?autoplay=1&controls=0&loop=1&playlist=1j2xisqR4ZY";
-        }
+      var trajectory = document.getElementsByTagName("select")[0].value;
 
-        document.getElementsByTagName("iframe")[0].src = url;
-        console.log(url);
-        console.log(index);
-      }
+      let output = {
+        port: port,
+        serial: serial,
+        delay: delay,
+        baud_value: baud,
+        via_points: via_points,
+        grippers: grippers,
+        trajectory: trajectory
+      };
+      return output;
+    }
+  </script>
+</body>
 
-      function submitForm(event) {
-        event.preventDefault();
-        console.log("Updated Parameters");
-
-        let output = get_parameters();
-
-        console.log(output);
-
-        ready_to_upload = document
-          .getElementsByTagName("form")[0]
-          .checkValidity();
-
-        return false;
-      }
-
-      function get_parameters() {
-        var port = document.getElementById("port").value;
-        var serial = document.getElementById("serial").checked;
-        var delay = parseFloat(document.getElementById("delay").value);
-        var baud = parseInt(document.getElementById("baud").value);
-        var via_points = parseInt(document.getElementById("via-points").value);
-        var grippers = document.getElementById("grippers").checked;
-
-        var trajectory = document.getElementsByTagName("select")[0].value;
-
-        let output = {
-          port: port,
-          serial: serial,
-          delay: delay,
-          baud_value: baud,
-          via_points: via_points,
-          grippers: grippers,
-          trajectory: trajectory
-        };
-        return output;
-      }
-    </script>
-  </body>
 </html>

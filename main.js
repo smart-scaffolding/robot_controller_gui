@@ -19,7 +19,7 @@ function createWindow() {
   const gui_platform = os.platform();
   console.log(gui_platform);
   if (gui_platform === "win32") {
-    gui_platform = true;
+    render_frame = true;
   }
 
   // Create the browser window.
@@ -31,7 +31,7 @@ function createWindow() {
       nodeIntegration: true,
       preload: path.join(__dirname, "preload.js"),
     },
-    frame: gui_platform,
+    frame: render_frame,
   });
 
   // and load the index.html of the app.

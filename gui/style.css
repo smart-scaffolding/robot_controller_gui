@@ -141,6 +141,7 @@ input {
 }
 
 @keyframes show {
+
   0%,
   49.99% {
     opacity: 0;
@@ -311,6 +312,14 @@ input[type="checkbox"] {
   position: relative;
   cursor: pointer;
   content: none;
+  margin-left: 20%;
+  margin-right: 70%;
+  left: -3%;
+}
+
+
+#grippers {
+  left: -10%;
 }
 
 input[type="checkbox"]:before {
@@ -429,11 +438,11 @@ tbody {
 }
 
 @media (-webkit-device-pixel-ratio: 1.5),
-  (device-pixel-ratio: 1.5),
-  (-webkit-device-pixel-ratio: 2),
-  (device-pixel-ratio: 2),
-  (-webkit-device-pixel-ratio: 3),
-  (device-pixel-ratio: 3) {
+(device-pixel-ratio: 1.5),
+(-webkit-device-pixel-ratio: 2),
+(device-pixel-ratio: 2),
+(-webkit-device-pixel-ratio: 3),
+(device-pixel-ratio: 3) {
   #window-controls .icon {
     width: 10px;
     height: 10px;
@@ -546,6 +555,9 @@ input[type="radio"] {
   position: relative;
   cursor: pointer;
   content: none;
+  margin-left: 20%;
+  margin-right: 70%;
+  left: 20%;
 }
 
 input[type="radio"]:before {
