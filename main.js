@@ -1,5 +1,5 @@
 const electron = require("electron");
-
+const os = require("os");
 // Module to control application life.
 const app = electron.app;
 // Module to create native browser window.
@@ -15,6 +15,13 @@ require("electron-reload")(__dirname);
 let mainWindow;
 
 function createWindow() {
+  let render_frame = false;
+  const gui_platform = os.platform();
+  console.log(gui_platform);
+  if (gui_platform === "win32") {
+    gui_platform = true;
+  }
+
   // Create the browser window.
   mainWindow = new BrowserWindow({
     width: 800,
@@ -22,9 +29,9 @@ function createWindow() {
     icon: __dirname + "/gui/images/icon.icns",
     webPreferences: {
       nodeIntegration: true,
-      preload: path.join(__dirname, "preload.js")
+      preload: path.join(__dirname, "preload.js"),
     },
-    frame: false
+    frame: gui_platform,
   });
 
   // and load the index.html of the app.
@@ -32,7 +39,7 @@ function createWindow() {
     url.format({
       pathname: path.join(__dirname, "/gui/index.html"),
       protocol: "file:",
-      slashes: true
+      slashes: true,
     })
   );
 
@@ -42,17 +49,17 @@ function createWindow() {
       submenu: [
         {
           label: "About Application",
-          selector: "orderFrontStandardAboutPanel:"
+          selector: "orderFrontStandardAboutPanel:",
         },
         { type: "separator" },
         {
           label: "Quit",
           accelerator: "Command+Q",
-          click: function() {
+          click: function () {
             app.quit();
-          }
-        }
-      ]
+          },
+        },
+      ],
     },
     {
       label: "Edit",
@@ -66,17 +73,17 @@ function createWindow() {
         {
           label: "Select All",
           accelerator: "CmdOrCtrl+A",
-          selector: "selectAll:"
-        }
-      ]
-    }
+          selector: "selectAll:",
+        },
+      ],
+    },
   ];
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools();
 
   // Emitted when the window is closed.
-  mainWindow.on("closed", function() {
+  mainWindow.on("closed", function () {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
@@ -90,14 +97,14 @@ function createWindow() {
 app.on("ready", createWindow);
 
 // Quit when all windows are closed.
-app.on("window-all-closed", function() {
+app.on("window-all-closed", function () {
   // On OS X it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
 
   app.quit();
 });
 
-app.on("activate", function() {
+app.on("activate", function () {
   // On OS X it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
   if (mainWindow === null) {
