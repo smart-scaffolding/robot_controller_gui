@@ -312,14 +312,6 @@ input[type="checkbox"] {
   position: relative;
   cursor: pointer;
   content: none;
-  margin-left: 20%;
-  margin-right: 70%;
-  left: -3%;
-}
-
-
-#grippers {
-  left: -10%;
 }
 
 input[type="checkbox"]:before {
@@ -555,9 +547,6 @@ input[type="radio"] {
   position: relative;
   cursor: pointer;
   content: none;
-  margin-left: 20%;
-  margin-right: 70%;
-  left: 20%;
 }
 
 input[type="radio"]:before {
