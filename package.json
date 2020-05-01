@@ -9,6 +9,8 @@
   "scripts": {
     "start": "electron .",
     "package": "electron-packager . --all --icon 'gui/images/icon.icns' --overwrite --out='./build'",
+    "package-mac": "electron-packager . --platform=darwin --icon 'gui/images/icon.icns' --overwrite --out='./build'",
+    "package-win": "electron-packager . --platform=win32 --icon 'gui/images/icon.icns' --overwrite --out='./build'",
     "dist": "electron-builder",
     "postinstall": "install-app-deps",
     "rebuild": "electron-rebuild -f -w ."

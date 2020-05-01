@@ -14,7 +14,7 @@ function generateTable(table, data) {
 
 function control_robot(file_path, parameters) {
   var options = {
-    scriptPath: file_path + "/components/robot/test",
+    scriptPath: file_path + "/components/robot/original",
     args: [
       parameters["serial"],
       parameters["port"],
