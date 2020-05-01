@@ -22,22 +22,22 @@ function control_robot(file_path, parameters) {
       parameters["delay"],
       parameters["via_points"],
       parameters["grippers"],
-      parameters["trajectory"]
-    ]
+      parameters["trajectory"],
+    ],
   };
 
   try {
     process.env["PYTHONPATH"] = file_path;
     let pyshell = new PythonShell("connect_to_gui.py", options);
 
-    pyshell.on("error", err => {
+    pyshell.on("error", (err) => {
       alert(err);
       new Notification("Error in running python code", {
-        body: "Something went wrong: " + err
+        body: "Something went wrong: " + err,
       });
     });
 
-    pyshell.on("message", function(message) {
+    pyshell.on("message", function (message) {
       console.log(message);
 
       function generateTableHead(table, data) {

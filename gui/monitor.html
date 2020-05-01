@@ -45,7 +45,7 @@
     <div id="main">
         <h2>Swarm Construction Microcontroller Monitor</h2>
         <div class="serial-output">
-            <h3>Serial Output: </h3>
+            <h3 class="serial-title">Serial Output: </h3>
             <div class="serial-text">
                 0001.00 -123.45 0213.20 0012
             </div>
@@ -94,33 +94,48 @@
                             </label>
                             <input id="baud" name="Baud" type="number" value="115200" required />
                         </div>
+                        <div class="scroll_full_width">
+                            <div class="input-form">
+                                <label class="tooltip">Joint 1:
+                                    <div class="tooltiptext">Set the angle for joint 1 (degrees)</div>
+                                </label>
+                                <input id="joint_1" type="number" step="0.01" value="0" onchange="serial_input_change()"
+                                    required />
 
-                        <div class="input-form">
-                            <label class="tooltip">Joint 1:
-                                <div class="tooltiptext">Set the angle for joint 1 (degrees)</div>
-                            </label>
-                            <input id="joint_1" type="number" step="0.01" value="40" onchange="serial_input_change()"
-                                required />
+                            </div>
 
+                            <div class="input-form">
+                                <label class="tooltip">Joint 2:
+                                    <div class="tooltiptext">Set the angle for joint 2 (degrees)</div>
+                                </label>
+                                <input id="joint_2" type="number" step="0.01" value="40"
+                                    onchange="serial_input_change()" required />
+                            </div>
+
+                            <div class="input-form">
+                                <label class="tooltip">Joint 3:
+                                    <div class="tooltiptext">Set the angle for joint 3 (degrees)</div>
+                                </label>
+                                <input id="joint_3" type="number" step="0.01" value="100"
+                                    onchange="serial_input_change()" required />
+                            </div>
+
+                            <div class="input-form">
+                                <label class="tooltip">Joint 4:
+                                    <div class="tooltiptext">Set the angle for joint 4 (degrees)</div>
+                                </label>
+                                <input id="joint_4" type="number" step="0.01" value="30"
+                                    onchange="serial_input_change()" required />
+                            </div>
+
+                            <div class="input-form">
+                                <label class="tooltip">Joint 5:
+                                    <div class="tooltiptext">Set the angle for joint 5 (degrees)</div>
+                                </label>
+                                <input id="joint_5" type="number" step="0.01" value="00"
+                                    onchange="serial_input_change()" required />
+                            </div>
                         </div>
-
-                        <div class="input-form">
-                            <label class="tooltip">Joint 2:
-                                <div class="tooltiptext">Set the angle for joint 2 (degrees)</div>
-                            </label>
-                            <input id="joint_2" type="number" step="0.01" value="100" onchange="serial_input_change()"
-                                required />
-                        </div>
-
-                        <div class="input-form">
-                            <label class="tooltip">Joint 3:
-                                <div class="tooltiptext">Set the angle for joint 3 (degrees)</div>
-                            </label>
-                            <input id="joint_3" type="number" step="0.01" value="30" onchange="serial_input_change()"
-                                required />
-                        </div>
-
-
                         <fieldset>
                             <legend>Grippers</legend>
                             <div id="grippers" class="fieldset_div">
@@ -314,6 +329,10 @@
             var joint_1 = parseFloat(document.getElementById("joint_1").value).toFixed(2);
             var joint_2 = parseFloat(document.getElementById("joint_2").value).toFixed(2);
             var joint_3 = parseFloat(document.getElementById("joint_3").value).toFixed(2);
+            var joint_4 = parseFloat(document.getElementById("joint_4").value).toFixed(2);
+            var joint_5 = parseFloat(document.getElementById("joint_5").value).toFixed(2);
+
+
             var gripper_radios = document.getElementsByName('grippers');
 
             var gripper = "00";
@@ -391,6 +410,8 @@
                 "joint_1": joint_1,
                 "joint_2": joint_2,
                 "joint_3": joint_3,
+                "joint_4": joint_4,
+                "joint_5": joint_5,
                 "allen_key": allen,
                 "grippers": gripper
 
@@ -398,8 +419,8 @@
 
 
             let serial_output = formatJointOutput(joint_1) + " " + formatJointOutput(joint_2) + " " + formatJointOutput(
-                    joint_3) + " " +
-                allen + gripper + "\n";
+                    joint_3) + " " + formatJointOutput(joint_4) + " " + formatJointOutput(joint_5) + " " + allen +
+                gripper + "\n";
             console.log(serial_output)
 
             document.getElementsByClassName("serial-text")[0].innerText = serial_output;
@@ -444,9 +465,11 @@
         }
 
         function home_robot() {
-            document.getElementById("joint_1").value = 28.00;
-            document.getElementById("joint_2").value = 124.00;
-            document.getElementById("joint_3").value = 28.00;
+            document.getElementById("joint_1").value = 0.00;
+            document.getElementById("joint_2").value = 28.00
+            document.getElementById("joint_3").value = 124.00;
+            document.getElementById("joint_4").value = 28.00;
+            document.getElementById("joint_5").value = 0.00;
 
             serial_input_change();
         }
